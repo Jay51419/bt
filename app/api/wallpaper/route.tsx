@@ -6,7 +6,13 @@ export async function GET() {
     const fontData = await fetch(
         new URL('./Frijole-Regular.ttf', import.meta.url)
     ).then((res) => res.arrayBuffer());
-    const today = new Date();
+
+    const utcNow = new Date();
+    const istString = utcNow.toLocaleString('en-US', { timeZone: 'Asia/Kolkata' });
+    const today = new Date(istString);
+
+    // Strip the time away to ensure clean midnight-to-midnight math
+    today.setHours(0, 0, 0, 0);
 
     // Base dates
     const birthYear = 2003;
